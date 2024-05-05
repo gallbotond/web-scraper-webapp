@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../web-scraper-py"
+		},
+		{
+			"path": "../web-scraper-js"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}
