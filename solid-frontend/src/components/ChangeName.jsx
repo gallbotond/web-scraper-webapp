@@ -84,10 +84,19 @@ function ChangeName() {
         }
     });
 
+    // derived value example
+    const doubleCount = () => count() * 2;
+
+    // const totalPrice = () => {
+    //     return products.reduce((acc, p) => {
+    //         return p.available ? acc + 1 : acc;
+    //     }, 0);
+
     return (
         <div>
             <p>
-                The name is {name}: {truth() ? "yes" : "no"} {count()}
+                The name is {name}: {truth() ? "yes" : "no"} {count()}{" "}
+                {doubleCount()}
             </p>
             <p>
                 {/* {person().name.first} {person().name.last} is {person().age}{" "} years old */}
