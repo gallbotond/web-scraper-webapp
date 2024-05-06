@@ -14,7 +14,7 @@ const fetchItem = async (id) => {
         });
 };
 
-function Item() {
+export default function ItemPage() {
     const params = useParams();
     const [item] = createResource(() => fetchItem(params.id)); // fetch item example
     const { selectedItems, setSelectedItems } = useSelectedContext();
@@ -53,7 +53,7 @@ function Item() {
                     p.id === item()._id
                         ? { ...p, quantity: p.quantity + 1 }
                         : p;
-                    console.log('quantity', p.quantity);
+                    console.log("quantity", p.quantity);
                 })
             );
         } else {
@@ -96,4 +96,3 @@ function Item() {
         </Show>
     );
 }
-export default Item;

@@ -15,7 +15,7 @@ const fetchItems = async () => {
         });
 };
 
-function Items() {
+export default function ItemsPage() {
     const [items] = createResource(fetchItems); // fetch items
     const { selectedItems } = useSelectedContext();
     console.log(selectedItems);
@@ -23,7 +23,13 @@ function Items() {
         <>
             <div>
                 <h1 class="text-3xl">context Items</h1>
-                <For each={selectedItems}>{(item) => <p>{item.name.slice(0,20)} {item.quantity}</p>}</For>
+                <For each={selectedItems}>
+                    {(item) => (
+                        <p>
+                            {item.name.slice(0, 20)} {item.quantity}
+                        </p>
+                    )}
+                </For>
             </div>
             <Show when={items()} fallback={<p>Loading...</p>}>
                 <For each={items()}>
@@ -43,4 +49,3 @@ function Items() {
         </>
     );
 }
-export default Items;

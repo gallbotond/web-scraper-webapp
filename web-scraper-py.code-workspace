@@ -8,7 +8,12 @@
 		},
 		{
 			"path": "."
+		},
+		{
+			"path": "../learn-tailwind"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"prettier.tabWidth": 4
+	}
 }

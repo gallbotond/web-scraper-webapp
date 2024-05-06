@@ -1,30 +1,38 @@
 import { A } from "@solidjs/router";
 
-export default function Card(props) {
-  return (
-    <div
-      className="card"
-      class=" p-2 rounded-md shadow-md my-4"
-      classList={{
-        "bg-gray-400 text-slate-200": props.available,
-        "bg-green-100": !props.available,
-      }}
-    >
-      <A href={`/item/${props.id}`} class="flex">
-        <div class="mx-2 flex-none">
-          {/* <img src={props.img} alt="img" class="max-w-20"/> */}
-          {/* {console.log(props.img)} */}
+export default function Card({
+    name,
+    has_rating,
+    rating,
+    num_reviews,
+    img,
+    price,
+    id,
+}) {
+    console.log(price[price.length - 1].value.toFixed(2));
+    return (
+        <div
+            className="card"
+            class="flex gap-4 p-2 m-2 rounded-md shadow-md my-4"
+            classList={{
+                "bg-gray-400 text-slate-200": !has_rating,
+                "bg-green-100": has_rating,
+            }}
+        >
+            <img src={img} alt="img" class="max-w-20" />
+            <div class="flex-column">
+                <A href={`/items/${id}`} class="flex">
+                    <h2>{name.split(" ").slice(0, 13).join(" ")}</h2>
+                </A>
+                <p class="font-bold">
+                    {price[price.length - 1].value.toFixed(2)}
+                </p>
+                <p>
+                    {has_rating
+                        ? rating + " out of " + num_reviews + " reviews"
+                        : "unrated"}
+                </p>
+            </div>
         </div>
-        <div className="flex-col">
-          <h2>{props.name}</h2>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem
-            distinctio in nobis, iste laudantium placeat id maxime illo
-            temporibus harum odio hic nesciunt, quos ea architecto corrupti
-            molestias eius saepe!
-          </p>
-        </div>
-      </A>
-    </div>
-  );
+    );
 }
