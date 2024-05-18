@@ -13,11 +13,11 @@ const fetchItems = async () => {
         });
 };
 
-function CollectionsPage() {
+function CollectionsPage({ limit }) {
     const [items] = createResource(fetchItems);
     return (
         <Show when={items()} fallback={<p>Loading...</p>}>
-            <For each={items()}>
+            <For each={items().slice(0, 10)}>
                 {(item) => (
                     <>
                         <Card
@@ -25,9 +25,9 @@ function CollectionsPage() {
                             has_rating={item.rating != -1}
                             rating={item.rating}
                             num_reviews={item.num_reviews}
+                            id={item._id}
                             img={item.img}
                             price={item.price}
-                            id={item._id}
                         />
                     </>
                 )}

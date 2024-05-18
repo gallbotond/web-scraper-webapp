@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  /* border: 2px magenta solid; */
+@layer base {
+    html {
+        /* background-color: darkslategrey; */
+        @apply bg-slate-800 text-slate-100;
+    }
+}
+
+@layer components {
+    /* .nav-list {
+        @apply fixed flex-col w-auto h-full text-white gap-y-10 bg-slate-500;
+    }
+    .navbar {
+        @apply bottom-0 w-20 h-screen m-4;
+    }
+    .main {
+        @apply flex-col ml-20;
+    } */
 }
