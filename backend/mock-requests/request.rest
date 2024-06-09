@@ -1,7 +1,7 @@
-GET http://localhost:5555/users
+### Get all the users
+GET http://localhost:5556/users
 
-###
-
+### Add user request
 POST http://localhost:5555/users
 Content-Type: application/json
 
@@ -10,13 +10,34 @@ Content-Type: application/json
   "password": "123456"
 }
 
-###
-
-POST http://localhost:5555/users/login
+### Login user request
+POST http://localhost:5556/users/login
 Content-Type: application/json
 
 {
-  "email": "test@email.test",
-  "password": "123456"
+  "email": "amog@us.sus",
+  "password": "impostor"
 }
 
+### Check if the server is working
+GET http://localhost:5555/
+
+### Get items request with access token
+POST http://localhost:5555/items
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFtb2dAdXMuc3VzIiwiaWF0IjoxNzE3OTY1MjgxLCJleHAiOjE3MTc5NjUzMDZ9.KJmjimkD6CObFpzxKbmGjQcoTjRQEJEnwjRFRXofWLM
+
+### Generate new access token with refresh token
+POST http://localhost:5556/token
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFtb2dAdXMuc3VzIiwiaWF0IjoxNzE3OTY1MzI5fQ.9wWNds0BXfCZF3ZIMsBkkHY2HpkJzptemHd1FLf7c7o"
+}
+
+### Log out user 
+DELETE  http://localhost:5556/logout
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFtb2dAdXMuc3VzIiwiaWF0IjoxNzE3OTY1MzI5fQ.9wWNds0BXfCZF3ZIMsBkkHY2HpkJzptemHd1FLf7c7o"
+}

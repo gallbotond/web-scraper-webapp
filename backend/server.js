@@ -1,9 +1,9 @@
-import brcypt from "bcrypt";
 import cors from "cors";
 import express from "express";
+import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
-import { MONGO_URI, PORT } from "./config.js";
+import { ACCESS_TOKEN_SECRET, MONGO_URI, SERVER_PORT } from "./config.js";
 
 import indexRouter from "./routes/indexRoute.js";
 import itemRoute from "./routes/itemRoute.js";
@@ -11,10 +11,9 @@ import itemRoute from "./routes/itemRoute.js";
 const app = express();
 // const indexRouter = require("./routes/index");
 
-// middleware to parse json
-app.use(express.json());
-// middleware for CORS
-app.use(cors());
+app.use(express.json()); // middleware for parsing JSON
+app.use(cors()); // middleware for enabling CORS
+
 app.use("/", indexRouter);
 
 // app.get("/", (req, res) => {
@@ -23,50 +22,36 @@ app.use("/", indexRouter);
 
 app.use("/items", itemRoute);
 
-const users = [
-    { email: "testmail@mail.com", password: "password" },
-    { email: "amog@us.sus", password: "password" },
+const items = [
+    { email: "test@email.test", text: "item 1" },
+    { email: "amog@us.sus", text: "amogs 1" },
+    { email: "amog@us.sus", text: "item xdd" },
 ];
-app.get("/users", (req, res) => {
-    res.json(users);
-});
 
-app.post("/users", async (req, res) => {
-    try {
-        const hashedPassword = await brcypt.hash(req.body.password, 10);
-        console.log(hashedPassword);
-        const user = { email: req.body.email, password: hashedPassword };
-        users.push(user);
-        res.status(201).json(users).send();
-    } catch {
-        res.status(500).send();
-    }
+app.post("/items", authenticateToken, (req, res) => {
+    res.json(items.filter((item) => item.email === req.user.email));
 });
-
-app.post("/users/login", async (req, res) => {
-    const user = users.find((user) => user.email === req.body.email);
-    if (user == null) {
-        return res.status(400).send("Cannot find user");
-    }
-    try {
-        if (await brcypt.compare(req.body.password, user.password)) {
-            res.send("Success");
-        } else {
-            res.send("Not Allowed");
-        }
-    } catch {
-        res.status(500).send();
-    }
-})
 
 mongoose
     .connect(MONGO_URI)
     .then(() => {
         console.log("Connected to MongoDB");
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
+        app.listen(SERVER_PORT, () => {
+            console.log(`Server is running on port ${SERVER_PORT}`);
         });
     })
     .catch((error) => {
         console.error("Error connecting to MongoDB", error);
     });
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+    if (token == null) return res.sendStatus(401);
+
+    jwt.verify(token, ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403);
+        req.user = user;
+        next();
+    });
+}
