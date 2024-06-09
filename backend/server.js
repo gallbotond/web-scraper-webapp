@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 
 import { MONGO_URI, PORT } from "./config.js";
 
-import indexRouter from "./routes/index.js";
+import indexRouter from "./routes/indexRoute.js";
 import itemRoute from "./routes/itemRoute.js";
 
 const app = express();
