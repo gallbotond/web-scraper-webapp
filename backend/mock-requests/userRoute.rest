@@ -1,3 +1,5 @@
+### Check if the server is working
+GET http://localhost:5555/
 
 ### Create / add / register user request
 POST http://localhost:5555/users
@@ -43,9 +45,8 @@ GET http://localhost:5555/users
 ### Get a single user by id
 GET http://localhost:5555/users/6668d2f5f6a41ba5520251af
 
-
-### Check if the server is working
-GET http://localhost:5555/
+### Delete a user by id
+DELETE http://localhost:5555/users/6668d2ecf6a41ba5520251a9
 
 ### Get items request with access token
 POST http://localhost:5555/items

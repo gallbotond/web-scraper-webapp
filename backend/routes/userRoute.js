@@ -19,8 +19,8 @@ router.get("/", async (req, res) => {
 // route to get a single user
 router.get("/:id", (req, res) => {
     const id = req.params.id;
-    console.log("id")
-    console.log(id);
+    // console.log("id")
+    // console.log(id);
     User.findById(id)
         .then((user) => {
             res.status(200).json(user);
@@ -97,14 +97,14 @@ router.put("/:id", async (req, res) => {
 // route to delete a user
 router.delete("/:id", (req, res) => {
     const { id } = req.params; // Extract the user ID from the request parameters
-
-    User.findByIdAndRemove(id)
+    // console.log(id)
+    User.findByIdAndDelete(id)
         .then((user) => {
             if (!user) {
                 return res.status(404).send({ message: "User not found" });
             }
             res.status(200).json(user);
-            console.log("User deleted");
+            console.log(`User ${id} deleted`);
         })
         .catch((error) => {
             console.error("Error deleting user", error);
