@@ -7,6 +7,7 @@ import { ACCESS_TOKEN_SECRET, MONGO_URI, SERVER_PORT } from "./config.js";
 
 import indexRouter from "./routes/indexRoute.js";
 import itemRoute from "./routes/itemRoute.js";
+import userRoute from "./routes/userRoute.js";
 
 const app = express();
 // const indexRouter = require("./routes/index");
@@ -15,22 +16,19 @@ app.use(express.json()); // middleware for parsing JSON
 app.use(cors()); // middleware for enabling CORS
 
 app.use("/", indexRouter);
-
-// app.get("/", (req, res) => {
-//     res.send("Hello World");
-// });
-
 app.use("/items", itemRoute);
+app.use("/users", userRoute);
 
-const items = [
-    { email: "test@email.test", text: "item 1" },
-    { email: "amog@us.sus", text: "amogs 1" },
-    { email: "amog@us.sus", text: "item xdd" },
-];
+// hardcoded items
+// const items = [
+//     { email: "test@email.test", text: "item 1" },
+//     { email: "amog@us.sus", text: "amogs 1" },
+//     { email: "amog@us.sus", text: "item xdd" },
+// ];
 
-app.post("/items", authenticateToken, (req, res) => {
-    res.json(items.filter((item) => item.email === req.user.email));
-});
+// app.post("/items", authenticateToken, (req, res) => {
+//     res.json(items.filter((item) => item.email === req.user.email));
+// });
 
 mongoose
     .connect(MONGO_URI)

@@ -45,12 +45,14 @@ const users = [
 //     }
 // });
 
+// return all users
 app.get("/users", (req, res) => {
     res.json(users);
 });
 
 let refreshTokens = [];
 
+// get new access token with refresh token
 app.post("/token", (req, res) => {
     const refreshToken = req.body.token;
     console.log(refreshToken);
@@ -65,6 +67,7 @@ app.post("/token", (req, res) => {
     });
 });
 
+// log out user by deleting refresh token
 app.delete("/logout", (req, res) => {
     refreshTokens = refreshTokens.filter((token) => token !== req.body.token);
     res.sendStatus(204);
@@ -80,15 +83,13 @@ app.post("/users/login", async (req, res, next) => {
     try {
         console.log("try");
         if (await brcypt.compare(req.body.password, user.password)) {
-            // res.send("Logged In successfully");
-
             // jwt authentication process
-            // const email = req.body.email;
             const email = { email: req.body.email };
             const accessToken = generateToken(email);
             const refreshToken = jwt.sign(email, REFRESH_TOKEN_SECRET);
             refreshTokens.push(refreshToken);
 
+            // return access token and refresh token
             res.json({ accessToken: accessToken, refreshToken: refreshToken });
         } else {
             res.send("Login failed");
