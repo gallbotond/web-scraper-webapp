@@ -2,10 +2,14 @@ import brcypt from "bcrypt";
 import cors from "cors";
 import express from "express";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
+
+import tokenRoute from "./routes/tokenRoute.js";
 
 import {
     ACCESS_TOKEN_SECRET,
     AUTH_SERVER_PORT,
+    MONGO_URI,
     REFRESH_TOKEN_SECRET,
 } from "./config.js";
 
@@ -15,23 +19,25 @@ const app = express();
 app.use(express.json()); // middleware for parsing JSON
 app.use(cors()); // middleware for enabling CORS
 
-const users = [
-    {
-        email: "testmail@mail.com",
-        password: await brcypt.hash("password", 10),
-        text: "Hello",
-    },
-    {
-        email: "amog@us.sus",
-        password: await brcypt.hash("impostor", 10),
-        text: "Among Us",
-    },
-    {
-        email: "test@email.test",
-        password: await brcypt.hash("123456", 10),
-        text: "Test",
-    },
-];
+app.use("/tokens", tokenRoute);
+
+// const users = [
+//     {
+//         email: "testmail@mail.com",
+//         password: await brcypt.hash("password", 10),
+//         text: "Hello",
+//     },
+//     {
+//         email: "amog@us.sus",
+//         password: await brcypt.hash("impostor", 10),
+//         text: "Among Us",
+//     },
+//     {
+//         email: "test@email.test",
+//         password: await brcypt.hash("123456", 10),
+//         text: "Test",
+//     },
+// ];
 
 // app.post("/users", async (req, res) => {
 //     try {
@@ -103,6 +109,18 @@ function generateToken(user) {
     return jwt.sign(user, ACCESS_TOKEN_SECRET, { expiresIn: "25s" });
 }
 
-app.listen(AUTH_SERVER_PORT, () => {
-    console.log(`Server running on port ${AUTH_SERVER_PORT}`);
-});
+// app.listen(AUTH_SERVER_PORT, () => {
+//     console.log(`Server running on port ${AUTH_SERVER_PORT}`);
+// });
+
+mongoose
+    .connect(MONGO_URI)
+    .then(() => {
+        console.log("Connected to MongoDB");
+        app.listen(AUTH_SERVER_PORT, () => {
+            console.log(`Server is running on port ${AUTH_SERVER_PORT}`);
+        });
+    })
+    .catch((error) => {
+        console.error("Error connecting to MongoDB", error);
+    });

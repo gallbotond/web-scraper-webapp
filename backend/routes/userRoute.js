@@ -23,6 +23,9 @@ router.get("/:id", (req, res) => {
     // console.log(id);
     User.findById(id)
         .then((user) => {
+            if (!user) {
+                return res.status(404).send({ message: "User not found" });
+            }
             res.status(200).json(user);
         })
         .catch((error) => {
@@ -45,7 +48,7 @@ router.post("/", async (req, res) => {
 
         // If email is not in use, proceed to create the user
         const user = new User({
-            email: await brcypt.hash(email, 10),
+            email,
             password: await brcypt.hash(password, 10),
             username,
             date_created: new Date().toISOString(),

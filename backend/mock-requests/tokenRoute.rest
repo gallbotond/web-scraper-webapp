@@ -1,0 +1,38 @@
+### Put a new token
+POST http://localhost:5556/tokens
+Content-Type: application/json
+
+{
+    "value": "ef60636f061d0f53a18b340f55cd7d3acc33c68d13a642db9f33e37c6ee78b4f03f57a7d994791c16eb8ead39c278a4e06339d1e17e2967f90a888e8c9a0e0c7"
+}
+###
+POST http://localhost:5556/tokens
+Content-Type: application/json
+
+{
+    "value": "28fe9996b61a48b29466f1dc29589c91ea29413361f995a3acbeefb26d15155029739c5492db2f571f4b277cca94c47f1bbf1e3b6c3e3d857e3de49c25e161bf"
+}
+###
+POST http://localhost:5556/tokens
+Content-Type: application/json
+
+{
+    "value": "1ef7f9ca8970d9ca63359dcb9e62263561918ae576b99d3fe8b86555659f46b2270026a2b20eb6e8d96d4db516ef61abf1a2d71c05c37239acbb67700dfce86d"
+}
+
+### Get all tokens
+GET http://localhost:5556/tokens
+
+### Get single token by id
+GET http://localhost:5556/tokens/6668e0a98c405d250d36706c
+
+### Delete single token by id
+DELETE http://localhost:5556/tokens/6668e0a98c405d250d36706c
+
+### Delete token by value
+DELETE http://localhost:5556/tokens/
+Content-Type: application/json
+
+{
+    "value": "ef60636f061d0f53a18b340f55cd7d3acc33c68d13a642db9f33e37c6ee78b4f03f57a7d994791c16eb8ead39c278a4e06339d1e17e2967f90a888e8c9a0e0c7"
+}
