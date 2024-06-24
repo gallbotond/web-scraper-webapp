@@ -1,10 +1,13 @@
 import express from "express";
+
 import { Item } from "../models/itemModel.js";
+
+import authenticateToken from "../middleware/tokenMiddleware.js";
 
 const router = express.Router();
 
 // route to get all items
-router.get("/", async (req, res) => {
+router.get("/", authenticateToken, async (req, res) => {
     //   res.send("Get all items");
     try {
         const items = await Item.find();

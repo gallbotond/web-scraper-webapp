@@ -3,10 +3,12 @@ import express from "express";
 
 import { User } from "../models/userModel.js";
 
+import authenticateToken from "../middleware/tokenMiddleware.js";
+
 const router = express.Router();
 
 // route to get all users
-router.get("/", async (req, res) => {
+router.get("/", authenticateToken, async (req, res) => {
     // res.send("Get all users");
     try {
         const users = await User.find();
@@ -16,8 +18,8 @@ router.get("/", async (req, res) => {
     }
 });
 
-// route to get a single user
-router.get("/:id", (req, res) => {
+// route to get user data
+router.get("/:id", authenticateToken, (req, res) => {
     const id = req.params.id;
     // console.log("id")
     // console.log(id);
@@ -33,7 +35,7 @@ router.get("/:id", (req, res) => {
         });
 });
 
-// route to create a user
+// route to register a user
 router.post("/", async (req, res) => {
     const { email, password, username } = req.body;
 
@@ -61,15 +63,15 @@ router.post("/", async (req, res) => {
 
         const newUser = await user.save();
         res.status(201).json(newUser);
-        console.log("User created");
+        console.log("Registration successful");
     } catch (error) {
-        console.error("Error creating user", error);
+        console.error("Registration error", error);
         res.status(500).send(error);
     }
 });
 
 // route to update a user
-router.put("/:id", async (req, res) => {
+router.put("/:id", authenticateToken, async (req, res) => {
     const { id } = req.params; // Extract the user ID from the request parameters
     const updateData = req.body; // Assuming all the update fields are in the request body
 
@@ -98,19 +100,25 @@ router.put("/:id", async (req, res) => {
 });
 
 // route to delete a user
-router.delete("/:id", (req, res) => {
-    const { id } = req.params; // Extract the user ID from the request parameters
+// TODO: delete tokens
+router.delete("/:id", authenticateToken, async (req, res) => {
+    const { id } = req.params; // Extract the user ID from the request params
+    const { confirm } = req.body; // Extract the confirmation from the request body
+    const username = await User.findById(id).username;
     // console.log(id)
     User.findByIdAndDelete(id)
         .then((user) => {
             if (!user) {
                 return res.status(404).send({ message: "User not found" });
             }
+            if (confirm !== username) {
+                return res.status(400).send({ message: "Confirmation failed" });
+            }
             res.status(200).json(user);
-            console.log(`User ${id} deleted`);
+            console.log(`Account ${username} deleted successfully`);
         })
         .catch((error) => {
-            console.error("Error deleting user", error);
+            console.error("Account deletion error", error);
             res.status(500).send(error);
         });
 });

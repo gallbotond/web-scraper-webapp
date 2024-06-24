@@ -1,0 +1,52 @@
+### Create / add / register user request
+POST http://localhost:5556/auth/register
+Content-Type: application/json
+
+{
+  "email": "moricka@email.test",
+  "password": "123-moricka-321",
+  "username": "morickaa"
+}
+
+### get user by id
+GET http://localhost:5556/auth/666f5dbd4accab5761a7a000
+
+### login
+POST http://localhost:5556/auth/login
+Content-Type: application/json
+
+{
+  "email": "test123@email.test",
+  "password": "123-testyzesty-321"
+}
+
+### logout
+DELETE http://localhost:5556/auth/logout
+Content-Type: application/json
+
+{
+  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxMjNAZW1haWwudGVzdCIsImlhdCI6MTcxODU3Nzc1OX0.HTRZfUHF3EbMYM1nEarWTpy5mgrmDS8TNv80KlfQ9-w"
+}
+
+### Delete a user by id
+DELETE http://localhost:5556/auth/666f5dbd4accab5761a7a000
+
+### Get items request with access token
+POST http://localhost:5555/items
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFtb2dAdXMuc3VzIiwiaWF0IjoxNzE3OTY1MjgxLCJleHAiOjE3MTc5NjUzMDZ9.KJmjimkD6CObFpzxKbmGjQcoTjRQEJEnwjRFRXofWLM
+
+### Generate new access token with refresh token
+POST http://localhost:5556/token
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFtb2dAdXMuc3VzIiwiaWF0IjoxNzE3OTY1MzI5fQ.9wWNds0BXfCZF3ZIMsBkkHY2HpkJzptemHd1FLf7c7o"
+}
+
+### Log out user 
+DELETE  http://localhost:5556/logout
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFtb2dAdXMuc3VzIiwiaWF0IjoxNzE3OTY1MzI5fQ.9wWNds0BXfCZF3ZIMsBkkHY2HpkJzptemHd1FLf7c7o"
+}
