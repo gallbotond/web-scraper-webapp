@@ -1,3 +1,7 @@
+import jwt from "jsonwebtoken";
+
+import { ACCESS_TOKEN_SECRET } from "../config.js";
+
 // auth middleware
 export default function authenticateToken(req, res, next) {
     const authHeader = req.headers["authorization"];
