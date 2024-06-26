@@ -19,7 +19,7 @@ Content-Type: application/json
 
 ### get user by id
 GET http://localhost:5555/users/6679ec36319a8079d2b07f0d
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1vcmlja2FAZW1haWwudGVzdCIsImlhdCI6MTcxOTI2NjczNCwiZXhwIjoxNzE5MjY2NzU5fQ.1UEWewFlw_KW2QWk1i5N2-625YVre3errc3BYP5w0WU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1vcmlja2FAZW1haWwudGVzdCIsImlhdCI6MTcxOTQzMzY3MCwiZXhwIjoxNzE5NDM2OTcwfQ._4QPyrhZuDdvXbY_09cjdMxlgdrq3oHkS5woDb5XIFY
 
 ### logout
 DELETE http://localhost:5556/auth/logout
@@ -33,8 +33,8 @@ Content-Type: application/json
 DELETE http://localhost:5556/auth/666f5dbd4accab5761a7a000
 
 ### Get items request with access token
-POST http://localhost:5555/items
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFtb2dAdXMuc3VzIiwiaWF0IjoxNzE3OTY1MjgxLCJleHAiOjE3MTc5NjUzMDZ9.KJmjimkD6CObFpzxKbmGjQcoTjRQEJEnwjRFRXofWLM
+GET http://localhost:5555/items
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1vcmlja2FAZW1haWwudGVzdCIsImlhdCI6MTcxOTQzMzYyNywiZXhwIjoxNzE5NDMzNjgyfQ.cPBQ8TUMek-DJ9bq67-c5vAP2QQDoTWBE_IlX0hMSJw
 
 ### Generate new access token with refresh token
 POST http://localhost:5556/token
